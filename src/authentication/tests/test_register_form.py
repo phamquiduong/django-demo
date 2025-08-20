@@ -5,6 +5,18 @@ from authentication.models.user import User
 
 
 @pytest.mark.django_db
+@pytest.mark.parametrize(
+    'username,password,confirm_password',
+    [
+        ('username1', 'username123@', 'username123@'),
+    ]
+)
+def test_register_form_valid(username, password, confirm_password):
+    form = RegisterForm(data={'username': username, 'password': password, 'password_confirm': confirm_password})
+    assert form.is_valid()
+
+
+@pytest.mark.django_db
 @pytest.mark.parametrize('username', [
     'user123',
     'user.name',
@@ -58,6 +70,28 @@ def test_register_form_valid_password(password):
     )
 
     assert form.is_valid()
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    'password, confirm_password, expected_errors',
+    [
+        ('short', 'short', ['This password is too short. It must contain at least 6 characters.']),
+
+        ('45612389464', '45612389464', ['Mật khẩu này hoàn toàn là số.']),
+
+        ('password', 'password', ['Mật khẩu này quá phổ biến.']),
+    ]
+)
+
+def test_invalid_password(password, confirm_password, expected_errors):
+    form = RegisterForm(data={
+        'username': 'test_user',
+        'password': password,
+        'password_confirm': confirm_password,
+    })
+    assert form.is_valid() is False
+    assert form.errors['password'] == expected_errors
 
 
 @pytest.mark.django_db

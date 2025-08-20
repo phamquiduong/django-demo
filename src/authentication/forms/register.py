@@ -7,7 +7,7 @@ from authentication.models import User
 
 class RegisterForm(forms.Form):
     username = forms.CharField(min_length=4, max_length=32, validators=[UnicodeUsernameValidator()])
-    password = forms.CharField(min_length=6, max_length=16, validators=[validate_password])
+    password = forms.CharField(max_length=16, validators=[validate_password])
     password_confirm = forms.CharField()
 
     def clean_username(self):
