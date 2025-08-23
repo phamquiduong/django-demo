@@ -1,13 +1,13 @@
 from django import forms
-from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from authentication.models import User
+from authentication.validators.user import CustomPasswordValidator
 
 
 class RegisterForm(forms.Form):
     username = forms.CharField(min_length=4, max_length=32, validators=[UnicodeUsernameValidator()])
-    password = forms.CharField(max_length=16, validators=[validate_password])
+    password = forms.CharField(validators=[CustomPasswordValidator()])
     password_confirm = forms.CharField()
 
     def clean_username(self):

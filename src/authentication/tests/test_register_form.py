@@ -8,7 +8,7 @@ from authentication.models.user import User
 @pytest.mark.parametrize(
     'username,password,confirm_password',
     [
-        ('username1', 'username123@', 'username123@'),
+        ('username', 'Username123@', 'Username123@'),
     ]
 )
 def test_register_form_valid(username, password, confirm_password):
@@ -42,7 +42,7 @@ def test_register_form_valid_username(username):
     'test_username'
 ])
 def test_register_exists_username(username):
-    User.objects.create_user(username=username, password='P@ssTest123')
+    User.objects.create_user(username=username, password='P@ssTest123')  # type: ignore
 
     form = RegisterForm(
         data={
@@ -76,14 +76,23 @@ def test_register_form_valid_password(password):
 @pytest.mark.parametrize(
     'password, confirm_password, expected_errors',
     [
-        ('short', 'short', ['This password is too short. It must contain at least 6 characters.']),
+        ('', '', ['Trường này là bắt buộc.']),
 
-        ('45612389464', '45612389464', ['Mật khẩu này hoàn toàn là số.']),
+        ('short', 'short', ['Mật khẩu quá ngắn. Mật khẩu phải chứa ít nhất 6 kí tự']),
 
-        ('password', 'password', ['Mật khẩu này quá phổ biến.']),
+        ('longpassword12345', 'longpassword12345', ['Mật khẩu quá dài. Mật khẩu chỉ được chứa tối đa 16 kí tự.']),
+
+        ('45612389464', '45612389464', ['Mật khẩu này hoàn toàn là số. Vui lòng nhập lại mật khẩu khác.']),
+
+        ('alllowercase1@', 'alllowercase1@', ['Mật khẩu chứa ít nhất một chữ in hoa.']),
+
+        ('ALLUPPERCASE1@', 'ALLUPPERCASE1@', ['Mật khẩu chứa ít nhất một chữ thường.']),
+
+        ('NoSpecialChar1', 'NoSpecialChar1', ['Mật khẩu chứa ít nhất một kí tự đặc biệt (!@#$%^&*()?).']),
+
+        ('Space pass12@', 'Space pass12@', ['Mật khẩu không được chứa khoảng cách.']),
     ]
 )
-
 def test_invalid_password(password, confirm_password, expected_errors):
     form = RegisterForm(data={
         'username': 'test_user',
