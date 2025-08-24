@@ -1,4 +1,47 @@
 {
+  // **************** Hide some folder ****************
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+  },
+
+
+  // **************** Formatting ****************
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+
+  "editor.insertSpaces": true,
+  "editor.linkedEditing": true,
+
+  // HTML
+  "json.format.keepLines": true,
+  "html.format.wrapLineLength": 0,
+  "html.autoClosingTags": true,
+  "emmet.includeLanguages": {
+    "javascript": "html"
+  },
+  "[html][css][javascript][json][jsonc]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+  },
+
+  // Python
+  "[python]": {
+    "editor.rulers": [ 120 ],
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.formatOnSave": true
+  },
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+
+
+  // **************** Config testing ****************
   "python.testing.pytestArgs": [
     "src"
   ],

@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    // Python
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.vscode-python-envs",
+
+    // Python debug
+    "ms-python.debugpy",
+
+    // Python format
+    "ms-python.isort",
+    "ms-python.autopep8",
+    "ms-python.pylint",
+
+    // Support
+    "WeidaWang.quick-python-print",
+    "qwtel.sqlite-viewer",
+    "streetsidesoftware.code-spell-checker",
+  ]
+}
